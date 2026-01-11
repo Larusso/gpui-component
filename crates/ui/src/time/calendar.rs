@@ -601,9 +601,7 @@ impl Calendar {
                             view.set_date(Date::Range(Some(date), None), window, cx);
                         }
 
-                        if view.date.is_complete() {
-                            cx.emit(CalendarEvent::Selected(view.date()));
-                        }
+                        cx.emit(CalendarEvent::Selected(view.date()));
                     }
                 },
             ))
