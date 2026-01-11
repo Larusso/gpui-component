@@ -166,7 +166,10 @@ impl DatePickerState {
         self.calendar.update(cx, |view, cx| {
             view.set_date(date, window, cx);
         });
-        self.open = false;
+        // Only close the calendar when the date selection is complete
+        if date.is_complete() {
+            self.open = false;
+        }
         if emit {
             cx.emit(DatePickerEvent::Change(date));
         }
