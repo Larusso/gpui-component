@@ -184,6 +184,15 @@ impl DatePickerState {
         });
     }
 
+    /// Set the disabled matcher of the date picker (public API).
+    pub fn set_disabled_matcher(&mut self, matcher: impl Into<Matcher>, _: &mut Window, cx: &mut Context<Self>) {
+        self.disabled_matcher = Some(Rc::new(matcher.into()));
+        let matcher_clone = self.disabled_matcher.clone();
+        self.calendar.update(cx, |state, _| {
+            state.disabled_matcher = matcher_clone;
+        });
+    }
+
     fn on_escape(&mut self, _: &Cancel, window: &mut Window, cx: &mut Context<Self>) {
         if !self.open {
             cx.propagate();
